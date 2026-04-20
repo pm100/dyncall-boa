@@ -104,6 +104,16 @@ fn main() {
     register_dyncall(&mut ctx);
     register_check_quit(&mut ctx);
 
+    // Inject the working directory as __dir so scripts can build absolute paths.
+    let cwd = std::env::current_dir()
+        .map(|p| p.to_string_lossy().into_owned())
+        .unwrap_or_default();
+    ctx.register_global_property(
+        js_string!("__dir"),
+        JsValue::from(js_string!(cwd.as_str())),
+        Attribute::all(),
+    ).expect("__dir injection failed");
+
     match ctx.eval(Source::from_bytes(source.as_bytes())) {
         Ok(result) => {
             if !result.is_undefined() {

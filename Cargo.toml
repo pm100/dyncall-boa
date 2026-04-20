@@ -1,0 +1,18 @@
+[package]
+name = "boa_dyncall"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "boa_dyncall"
+path = "src/lib.rs"
+
+[[bin]]
+name = "demo"
+path = "src/main.rs"
+
+[dependencies]
+boa_engine  = "0.21.1"
+boa_gc      = "0.21.1"
+boa_runtime = "0.21.1"
+dyncall     = { path = "c:/work/dyncall" }
